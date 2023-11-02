@@ -1,144 +1,93 @@
+# Import Libraries
 import json
+import requests
 import streamlit as st
 
-with open("config/config.json", "r") as config_file:
-    config = json.load(config_file)
+# Initialization
+API_URL = 'http://backend:8000/recommend'
+with open('config/config.json', 'r') as config_file:
+    input_options = json.load(config_file)
 
-# Title of the web app
-st.title("Tech Talent Recommendation Engine")
 
-# 1. Age of the Candidate
-ages = config["ages"]
-age = st.selectbox(
-    "Age of The Candidate Wanted",
-    ages
-)
+def select_multiple_options(title, options, num_cols=5):
+    st.subheader(title)
+    cols = st.columns(num_cols)
+    selected_options = []
+    for i, option in enumerate(options):
+        with cols[i % num_cols]:
+            if st.checkbox(option):
+                selected_options.append(option)
+    return selected_options
 
-# 2. Work Preferences
-work_preferences = config["work_preferences"]
-work_pref = st.selectbox(
-    "Work Preferences",
-    work_preferences
-)
 
-# 3. Education Level
-education_levels = config["education_levels"]
-education = st.selectbox(
-    "Education Level",
-    education_levels
-)
+def main():
+    # Main UI
+    st.title("Tech Talent Recommendation Engine")
 
-# 4. Developer Type
-developer_types = config["developer_types"]
-dev_type = st.selectbox(
-    "Developer Type",
-    developer_types
-)
+    # Candidate's Personal Information Inputs
+    st.header("Candidate's Personal Information")
+    age_ranges = st.selectbox("Age Range", input_options["age_ranges"])
+    work_arrangements = st.selectbox(
+        "Work Arrangement", input_options["work_arrangements"])
+    education_levels = st.selectbox(
+        "Education Level", input_options["education_levels"])
+    roles = st.selectbox("Role", input_options["roles"])
+    years_of_experience = st.number_input("Years of Experience", min_value=0)
 
-num_cols = 5
+    # Candidate's Technical Skills Inputs
+    st.header("Candidate's Technical Skills")
+    programming_languages = select_multiple_options(
+        "Programming Languages", input_options["programming_languages"])
+    databases = select_multiple_options(
+        "Databases", input_options["databases"])
+    cloud_platforms = select_multiple_options(
+        "Cloud Platforms", input_options["cloud_platforms"])
+    web_frameworks = select_multiple_options(
+        "Web Frameworks", input_options["web_frameworks"])
+    other_frameworks = select_multiple_options(
+        "Other Frameworks", input_options["other_frameworks"])
+    developer_tools = select_multiple_options(
+        "Developer Tools", input_options["developer_tools"])
+    development_environments = select_multiple_options(
+        "Development Environments", input_options["development_environments"])
+    operating_systems = select_multiple_options(
+        "Operating Systems", input_options["operating_systems"])
+    collaboration_tools = select_multiple_options(
+        "Collaboration Tools", input_options["collaboration_tools"])
+    communication_tools = select_multiple_options(
+        "Communication Tools", input_options["communication_tools"])
 
-# 5. Programming Language
-st.subheader("Programming Languages")
-programming_languages = config["programming_languages"]
-cols = st.columns(num_cols)
-selected_programming_languages = []
-for i, lang in enumerate(programming_languages):
-    with cols[i % num_cols]:
-        if st.checkbox(lang, key=f'prog_lang_{lang}'):
-            selected_programming_languages.append(lang)
+    # Recommend Button
+    if st.button("Recommend"):
+        data = {
+            "age_range": age_ranges,
+            "work_arrangement": work_arrangements,
+            "education_level": education_levels,
+            "role": roles,
+            "years_of_experience": years_of_experience,
+            "programming_languages": ";".join(programming_languages),
+            "databases": ";".join(databases),
+            "cloud_platforms": ";".join(cloud_platforms),
+            "web_frameworks": ";".join(web_frameworks),
+            "other_frameworks": ";".join(other_frameworks),
+            "developer_tools": ";".join(developer_tools),
+            "development_environments": ";".join(development_environments),
+            "operating_systems": ";".join(operating_systems),
+            "collaboration_tools": ";".join(collaboration_tools),
+            "communication_tools": ";".join(communication_tools)
+        }
+        json_data = json.dumps(data)
+        response = requests.post(API_URL, json=json_data)
+        print(json_data)
+        if response.status_code == 200:
+            recommendations = response.json().get("recommendations", [])
+            st.write("Recommendations:")
+            for rec in recommendations:
+                st.write(rec)
+            else:
+                st.error(
+                    f"Failed to get recommendations. Status code: {response.status_code}")
 
-# 6. Database
-st.subheader("Databases")
-databases = config["databases"]
-cols = st.columns(num_cols)
-selected_databases = []
-for i, db in enumerate(databases):
-    with cols[i % num_cols]:
-        if st.checkbox(db, key=f'db_{db}'):
-            selected_databases.append(db)
 
-# 7. Cloud Platform
-st.subheader("Cloud Platforms")
-cloud_platforms = config["cloud_platforms"]
-cols = st.columns(num_cols)
-selected_cloud_platforms = []
-for i, platform in enumerate(cloud_platforms):
-    with cols[i % num_cols]:
-        if st.checkbox(platform, key=f'cloud_{platform}'):
-            selected_cloud_platforms.append(platform)
-
-# 8. Web Framework
-st.subheader("Web Frameworks")
-web_frameworks = config["web_frameworks"]
-cols = st.columns(num_cols)
-selected_web_frameworks = []
-for i, framework in enumerate(web_frameworks):
-    with cols[i % num_cols]:
-        if st.checkbox(framework, key=f'web_fw_{framework}'):
-            selected_web_frameworks.append(framework)
-
-# 9. Other Framework
-st.subheader("Other Frameworks")
-other_frameworks = config["other_frameworks"]
-cols = st.columns(num_cols)
-selected_other_frameworks = []
-for i, framework in enumerate(other_frameworks):
-    with cols[i % num_cols]:
-        if st.checkbox(framework, key=f'other_fw_{framework}'):
-            selected_other_frameworks.append(framework)
-
-# 10. Developer Tools
-st.subheader("Developer Tools")
-developer_tools = config["developer_tools"]
-cols = st.columns(num_cols)
-selected_developer_tools = []
-for i, tool in enumerate(developer_tools):
-    with cols[i % num_cols]:
-        if st.checkbox(tool, key=f'dev_tool_{tool}'):
-            selected_developer_tools.append(tool)
-
-# 11. Development Environment
-st.subheader("Development Environments")
-development_environments = config["development_environments"]
-cols = st.columns(num_cols)
-selected_development_environments = []
-for i, env in enumerate(development_environments):
-    with cols[i % num_cols]:
-        if st.checkbox(env, key=f'dev_env_{env}'):
-            selected_development_environments.append(env)
-
-# 12. Operating System
-st.subheader("Operating Systems")
-operating_systems = config["operating_systems"]
-cols = st.columns(num_cols)
-selected_operating_systems = []
-for i, operating_system in enumerate(operating_systems):
-    with cols[i % num_cols]:
-        if st.checkbox(operating_system, key=f'operating_system_{operating_system}'):
-            selected_operating_systems.append(operating_system)
-
-# 13. Collaborative Work Management Tools
-st.subheader("Collaborative Work Management Tools")
-collaboration_tools = config["collaboration_tools"]
-cols = st.columns(num_cols)
-selected_collaboration_tools = []
-for i, collaboration_tools in enumerate(collaboration_tools):
-    with cols[i % num_cols]:
-        if st.checkbox(collaboration_tools, key=f'collaboration_tools_{collaboration_tools}'):
-            selected_collaboration_tools.append(collaboration_tools)
-
-# 14. Communication Tools
-st.subheader("Communication Tools")
-communication_tools = config["communication_tools"]
-cols = st.columns(num_cols)
-selected_communication_tools = []
-for i, communication_tools in enumerate(communication_tools):
-    with cols[i % num_cols]:
-        if st.checkbox(communication_tools, key=f'communication_tools_{communication_tools}'):
-            selected_communication_tools.append(communication_tools)
-
-# Submit button
-if st.button('Recommend'):
-    # You should process the inputs and generate recommendations here.
-    st.write("Recommendations coming soon...")
-    # Example: st.write(recommend_tech_talents(age, work_pref, education, ...))
+if __name__ == "__main__":
+    main()

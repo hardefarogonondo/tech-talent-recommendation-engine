@@ -1,5 +1,5 @@
 {
-  "ages": [
+  "age_ranges": [
     "Under 18 years old",
     "18-24 years old",
     "25-34 years old",
@@ -8,7 +8,7 @@
     "55-64 years old",
     "65 years or older"
   ],
-  "work_preferences": ["Remote", "Hybrid", "In-Person"],
+  "work_arrangements": ["Remote", "Hybrid", "In-Person"],
   "education_levels": [
     "Primary/elementary school",
     "Secondary school (e.g. American high school, German Realschule or Gymnasium, etc.)",
@@ -18,7 +18,7 @@
     "Master’s degree (M.A., M.S., M.Eng., MBA, etc.)",
     "Professional degree (JD, MD, Ph.D, Ed.D, etc.)"
   ],
-  "developer_types": [
+  "roles": [
     "Academic researcher",
     "Cloud infrastructure engineer",
     "Blockchain",
