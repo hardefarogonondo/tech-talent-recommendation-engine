@@ -4,7 +4,7 @@ import requests
 import streamlit as st
 
 # Initialization
-API_URL = 'http://backend:8000/recommend'
+API_URL = 'http://127.0.0.1:8000/recommend'
 with open('config/config.json', 'r') as config_file:
     input_options = json.load(config_file)
 
@@ -76,17 +76,17 @@ def main():
             "collaboration_tools": ";".join(collaboration_tools),
             "communication_tools": ";".join(communication_tools)
         }
-        json_data = json.dumps(data)
-        response = requests.post(API_URL, json=json_data)
-        print(json_data)
+        print(data)
+        response = requests.post(API_URL, json=data)
         if response.status_code == 200:
+            st.success("Success")
             recommendations = response.json().get("recommendations", [])
             st.write("Recommendations:")
             for rec in recommendations:
                 st.write(rec)
-            else:
-                st.error(
-                    f"Failed to get recommendations. Status code: {response.status_code}")
+        else:
+            st.error(
+                f"Failed to get recommendations. Status code: {response.status_code} Response: {response.text}")
 
 
 if __name__ == "__main__":
