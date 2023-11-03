@@ -1,4 +1,5 @@
 **/.ipynb_checkpoints
 **/.vscode
 **/__pycache__
+**/ml_from_scratch.egg-info
 data/raw/survey_results_public.csv
