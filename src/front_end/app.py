@@ -1,5 +1,6 @@
 # Import Libraries
 import json
+import pandas as pd
 import requests
 import streamlit as st
 
@@ -76,14 +77,12 @@ def main():
             "collaboration_tools": ";".join(collaboration_tools),
             "communication_tools": ";".join(communication_tools)
         }
-        print(data)
         response = requests.post(API_URL, json=data)
         if response.status_code == 200:
-            st.success("Success")
-            recommendations = response.json().get("recommendations", [])
-            st.write("Recommendations:")
-            for rec in recommendations:
-                st.write(rec)
+            st.success("Candidates successfully recommended.")
+            recommendations = response.json().get("recommended_candidates", [])
+            recommendations_df = pd.DataFrame(recommendations)
+            st.dataframe(recommendations_df)
         else:
             st.error(
                 f"Failed to get recommendations. Status code: {response.status_code} Response: {response.text}")
