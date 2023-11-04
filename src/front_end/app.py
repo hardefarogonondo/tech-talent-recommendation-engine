@@ -5,7 +5,7 @@ import requests
 import streamlit as st
 
 # Initialization
-API_URL = 'http://127.0.0.1:8000/recommend'
+API_URL = 'http://backend:8000/recommend'
 with open('config/config.json', 'r') as config_file:
     input_options = json.load(config_file)
 
