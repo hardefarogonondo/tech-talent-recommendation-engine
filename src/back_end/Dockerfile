@@ -8,7 +8,9 @@ COPY ./src/back_end /app
 COPY ./models /app/models
 COPY ./data/processed/df_preprocessed.pkl /app/data/processed/df_preprocessed.pkl
 COPY ./data/processed/df_processed_encoded.pkl /app/data/processed/df_processed_encoded.pkl
+COPY ./ml_from_scratch /app/ml_from_scratch
 
+RUN pip install --no-cache-dir /app/ml_from_scratch
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000

@@ -22,7 +22,6 @@ jsonschema-specifications==2023.7.1
 markdown-it-py==3.0.0
 MarkupSafe==2.1.3
 mdurl==0.1.2
--e git+ssh://git@github.com-account2/hardefarogonondo/tech-talent-recommendation-engine.git@9793ff2998473c1da453d6f36ea0f994bdbae2d2#egg=ml_from_scratch&subdirectory=ml_from_scratch
 numpy==1.26.1
 packaging==23.2
 pandas==2.1.2
