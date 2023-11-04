@@ -2,4 +2,5 @@
 **/.vscode
 **/__pycache__
 **/ml_from_scratch.egg-info
+data/processed/df_processed_encoded.pkl
 data/raw/survey_results_public.csv
