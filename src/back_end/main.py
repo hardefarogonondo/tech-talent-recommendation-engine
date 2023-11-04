@@ -10,11 +10,11 @@ import pandas as pd
 import pickle
 
 # Initialization
-df_original = pd.read_pickle('../../data/processed/df_preprocessed.pkl')
-df_encoded = pd.read_pickle('../../data/processed/df_processed_encoded.pkl')
-with open('../../models/alsf_model.pkl', 'rb') as file:
+df_original = pd.read_pickle('/app/data/processed/df_preprocessed.pkl')
+df_encoded = pd.read_pickle('/app/data/processed/df_processed_encoded.pkl')
+with open('/app/models/alsf_model.pkl', 'rb') as file:
     model = pickle.load(file)
-with open('../../models/scaler.pkl', 'rb') as file:
+with open('/app/models/scaler.pkl', 'rb') as file:
     scaler = pickle.load(file)
 app = FastAPI()
 
