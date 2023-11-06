@@ -1,6 +1,4 @@
-# tech-talent-recommendation-engine
-
-# Food.com Recipe Recommendation Engine
+# Tech Talent Recommendation Engine
 
 A Machine learning-based tech talent recommendation engine that matches developers with job roles using insights from Stack Overflow data.
 
@@ -219,18 +217,6 @@ For more in-depth information, a detailed document describing the dataset is ava
 ## Medium Articles
 
 [Recipe for Retention: How a Data-Driven Recommendation Engine is Spicing Up User Engagement for Food.com](https://medium.com/@hardefarogonondo/recipe-for-retention-how-a-data-driven-recommendation-engine-is-spicing-up-user-engagement-for-518fe347a3dd)
-
-## Acknowledgment: Pacmann Student Hackathon 2023
-
-This project was developed as part of the Pacmann Student Hackathon 2023, a competitive and enriching event that brought together talented data scientists and developers.
-
-We're absolutely thrilled to announce that our project not only received the Best Presentation Award but also secured the 1st Winner in the Pacmann Student Hackathon 2023. This accolade is a testament to the hard work, dedication, and skill of our incredible team.
-
-We'd like to express our deepest gratitude to the hackathon organizers, judges, and fellow participants. It was an enriching experience to compete against such talented individuals, and we learned a lot along the journey.
-
-Thank you for making this event a challenging yet rewarding experience!
-
-![1st Winner and Best Presentation Award](reports/figures/1st_winner_and_best_presentation_award.jpg)
 
 ## References
 
